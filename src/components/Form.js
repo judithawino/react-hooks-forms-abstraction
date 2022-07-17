@@ -1,21 +1,50 @@
 import React, { useState } from "react";
 
 function Form() {
-  const [firstName, setFirstName] = useState("John");
-  const [lastName, setLastName] = useState("Henry");
+    // const [firstName, setFirstName] = useState("John");
+    // const [lastName, setLastName] = useState("Henry");
+    const [formData, setFormData]= useState({firstName:"John", lastName:"Henry",checkBox:false});
 
-  function handleFirstNameChange(event) {
-    setFirstName(event.target.value);
+  function handleChange(event) {
+    // using the spread operator, copy data from fromData object and overwrite values of lastName with a new value.
+    // name attribute reprensts a key in our formData
+    let value=event.target.value;
+    const name=event.target.name;
+
+    if (event.target.type==="checkbox"){
+      value= event.target.checked;
+    }
+
+    setFormData({
+      ...formData,
+      [name]: value,});
   }
 
-  function handleLastNameChange(event) {
-    setLastName(event.target.value);
-  }
+  // function handleLastNameChange(event) {
+  //   setFormData({...formData, lastName:event.target.value,});
+  // }
 
   return (
     <form>
-      <input type="text" onChange={handleFirstNameChange} value={firstName} />
-      <input type="text" onChange={handleLastNameChange} value={lastName} />
+      {/* add a name attribute to help destructure the form*/}
+      <input 
+      type="text"
+      name="firstName" 
+      onChange={handleChange}
+      value={formData.firstName} 
+      />
+      <input
+       type="text" 
+       name="lastName" 
+       onChange={handleChange} 
+       value={formData.lastName} 
+       />
+       <input
+       type="checkbox" 
+       name="checkBox" 
+       onChange={handleChange} 
+       checked={formData.checkBox} 
+       />
       <button type="submit">Submit</button>
     </form>
   );
